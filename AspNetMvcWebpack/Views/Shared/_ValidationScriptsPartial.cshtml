@@ -1,0 +1,5 @@
+@using AspNetMvcWebpack.AssetHelpers
+
+@inject IAssetService AssetService
+
+@await AssetService.GetAsync("ValidationScripts", FileType.Js)

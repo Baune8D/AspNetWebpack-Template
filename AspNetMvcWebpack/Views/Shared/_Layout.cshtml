@@ -1,0 +1,58 @@
+@using AspNetMvcWebpack.AssetHelpers
+
+@inject IAssetService AssetService
+
+@{
+    var bundle = ViewData.GetBundleName() ?? Html.GetBundleName();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebApplication1</title>
+
+    @await AssetService.GetAsync("Layout", FileType.Css)
+    @RenderSection("StylesPreBundle", required: false)
+    @await AssetService.GetAsync(bundle, FileType.Css)
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WebApplication1</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <partial name="_CookieConsentPartial" />
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2018 - WebApplication1</p>
+        </footer>
+    </div>
+
+    @await AssetService.GetAsync("Layout", FileType.Js)
+    @RenderSection("ScriptsPreBundle", required: false)
+    @await AssetService.GetAsync(bundle, FileType.Js, ScriptLoad.Defer)
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

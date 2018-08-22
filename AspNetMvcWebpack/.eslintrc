@@ -1,0 +1,42 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "babel-eslint",
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "*.config.js"
+        ]
+      }
+    ],
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": [
+          "Bundles/*",
+          "Components/*",
+          "Images/*",
+          "Json/*",
+          "Modules/*",
+          "Vendor/*",
+          "Scipts/*",
+          "Styles/*",
+          "Views/*"
+        ]
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "linebreak-style": "off"
+  }
+}
