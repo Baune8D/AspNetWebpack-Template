@@ -3,12 +3,13 @@
 This project shows the default MVC template but using Webpack for the front-end.
 
 This template implements the following front-end technologies:
-* ES6 (Babel)
+* ES6/7/8 (Babel)
 * SCSS (Extracted to seperate files)
-* CSS Modules - By using ```.module.scss``` suffix
-* Code splitting - Using dynamic imports ```import()```
+* CSS Modules (By using ```.module.scss``` suffix)
+* Autoprefixer
+* Code splitting (Using dynamic imports ```import()```)
 * Sourcemaps
-* Dev server (Webpack-serve)
+* Dev server (No physical files are written in development)
 * HMR
 * Linting (Airbnb)
 * Auto formatting (Prettier)
@@ -18,7 +19,7 @@ The template is setup to always include 3 bundles:
 * ```Layout``` Include all global layout code.
 * ```<View>``` Bundle including view specific code.
 
-The root of all front-end code is ```Assets```.  
+The root of all front-end code is the ```Assets``` folder.  
 The following folders exists here:
 * ```bundles``` use this folder to manually generate bundles.
 * ```components``` for building components that can consist of multiple files.
@@ -29,8 +30,7 @@ The following folders exists here:
 * ```styles``` for all shared SCSS files.
 * ```vendor``` for keeping 3rd party files not available on npm.¨
 * ```views``` for JS and SCSS specific to MVC views. (Non-partial views are auto generated as bundles)
-
 All folders has Webpack aliases specified. See source for a better understanding.
 
-Included is a C# service called ```AssetService``` this service can be used through DI in views.  
+Included is a C# service called ```AssetService```, this service can be used through DI in views.  
 It contains 1 function ```GetAsync``` which should be used to include bundles.
