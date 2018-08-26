@@ -4,11 +4,11 @@ namespace AspNetMvcWebpack.AssetHelpers
 {
     public static class ViewDataExtensions
     {
-        public static string GetBundleName(this ViewDataDictionary<dynamic> viewData)
+        public static string GetBundleName(this ViewDataDictionary viewData)
         {
-            if (viewData.ContainsKey("__Bundle"))
+            if (viewData.ContainsKey("Bundle"))
             {
-                return (string)viewData["__Bundle"];
+                return (string)viewData["Bundle"];
             }
             return null;
         }

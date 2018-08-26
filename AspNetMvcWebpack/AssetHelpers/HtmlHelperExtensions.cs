@@ -6,7 +6,7 @@ namespace AspNetMvcWebpack.AssetHelpers
 {
     public static class HtmlHelperExtensions
     {
-        public static string GetBundleName(this IHtmlHelper<dynamic> html)
+        public static string GetBundleName(this IHtmlHelper html)
         {
             var path = html.ViewContext.View.Path;
             var controller = Path.GetDirectoryName(path)?.Split('\\').Last();
