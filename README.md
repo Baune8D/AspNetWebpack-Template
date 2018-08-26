@@ -10,8 +10,8 @@ This template implements the following front-end technologies:
 * Code splitting (Using dynamic imports ```import()```)
 * Sourcemaps
 * Dev server (No physical files are written in development)
-* HMR
-* Cache busting
+* Hot Module Replacement
+* Cache busting (When compiling for production)
 * Linting (Airbnb)
 * Auto formatting (Prettier)
 * Editorconfig
@@ -43,3 +43,10 @@ package.json contains 4 scripts:
 
 Included is a C# service called ```AssetService```, this service can be used through DI in views.  
 It contains 1 function ```GetAsync``` which should be used to include bundles.
+```csharp
+Task<HtmlString> GetAsync(FileType type, ScriptLoad load = ScriptLoad.Normal);
+Task<HtmlString> GetAsync(string resource, FileType type, ScriptLoad load = ScriptLoad.Normal);
+```
+
+Non partial views will default to loading the view specific bundle if it exists.  
+To override this behaviour, a bundle can be specified manually with ```ViewData["Bundle"]```
