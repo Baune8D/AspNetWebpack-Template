@@ -11,6 +11,7 @@ This template implements the following front-end technologies:
 * Sourcemaps
 * Dev server (No physical files are written in development)
 * HMR
+* Cache busting
 * Linting (Airbnb)
 * Auto formatting (Prettier)
 * Editorconfig
@@ -30,7 +31,8 @@ The following folders exists here:
 * ```scripts``` for storing single JS files that do NOT export any code.
 * ```styles``` for all shared SCSS files.
 * ```vendor``` for keeping 3rd party files not available on npm.¨
-* ```views``` for JS and SCSS specific to MVC views. (Non-partial views are auto generated as bundles)  
+* ```views``` for JS and SCSS specific to MVC views. (Non-partial views are auto generated as bundles)
+
 All folders has Webpack aliases specified. See source for a better understanding.
 
 Included is a C# service called ```AssetService```, this service can be used through DI in views.  
