@@ -44,35 +44,34 @@ namespace AspNetMvcWebpack.AssetHelpers
             return await GetAsync(DefaultResource, type, load);
         }
 
-        public virtual async Task<HtmlString> GetAsync(string resource, FileType type, ScriptLoad load = ScriptLoad.Normal)
+        public virtual async Task<HtmlString> GetAsync(string asset, FileType type, ScriptLoad load = ScriptLoad.Normal)
         {
             if (type == FileType.Css && load != ScriptLoad.Normal) throw new Exception("You can't define load type on CSS files!");
 
-            if (string.IsNullOrEmpty(resource)) return HtmlString.Empty;
+            if (string.IsNullOrEmpty(asset)) return HtmlString.Empty;
 
             switch (type)
             {
                 case FileType.Css:
-                    resource += ".css";
+                    asset += ".css";
                     break;
                 case FileType.Js:
-                    resource += ".js";
+                    asset += ".js";
                     break;
                 default:
                     throw new ArgumentNullException(nameof(type));
             }
 
-            resource = await GetFromManifestAsýnc(resource);
+            asset = await GetFromManifestAsýnc(asset);
 
-            return resource != null
-                ? new HtmlString(GetTag(resource, type, load))
+            return asset != null
+                ? new HtmlString(GetTag(asset, type, load))
                 : HtmlString.Empty;
         }
 
         private string GetTag(string file, FileType type, ScriptLoad load)
         {
             var path = _assetPath + file;
-
             var loadType = string.Empty;
 
             switch (load)

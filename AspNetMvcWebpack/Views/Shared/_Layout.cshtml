@@ -3,7 +3,7 @@
 @inject IAssetService AssetService
 
 @{
-    var bundle = ViewData.GetBundleName() ?? Html.GetBundleName();
+    var view = ViewData.GetBundleName() ?? Html.GetBundleName();
 }
 
 <!DOCTYPE html>
@@ -11,11 +11,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebApplication1</title>
+    <title>@ViewData["Title"] - AspNetMvcWeboack</title>
 
+    @await AssetService.GetAsync("Vendor", FileType.Css)
+    @RenderSection("VendorStyles", required: false)
     @await AssetService.GetAsync("Layout", FileType.Css)
-    @RenderSection("StylesPreBundle", required: false)
-    @await AssetService.GetAsync(bundle, FileType.Css)
+    @await AssetService.GetAsync(view, FileType.Css)
     @RenderSection("Styles", required: false)
 </head>
 <body>
@@ -50,9 +51,10 @@
         </footer>
     </div>
 
-    @await AssetService.GetAsync("Layout", FileType.Js)
-    @RenderSection("ScriptsPreBundle", required: false)
-    @await AssetService.GetAsync(bundle, FileType.Js, ScriptLoad.Defer)
+    @await AssetService.GetAsync("Vendor", FileType.Js)
+    @RenderSection("VendorScripts", required: false)
+    @await AssetService.GetAsync("Layout", FileType.Js, ScriptLoad.Defer)
+    @await AssetService.GetAsync(view, FileType.Js, ScriptLoad.Defer)
     @RenderSection("Scripts", required: false)
 </body>
 </html>

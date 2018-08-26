@@ -11,10 +11,6 @@
 
 @if (showBanner)
 {
-    @section ScriptsPreBundle {
-        @await AssetService.GetAsync("CookieConsent", FileType.Js)
-    }
-
     <nav id="cookieConsent" class="navbar navbar-default navbar-fixed-top" role="alert">
         <div class="container">
             <div class="navbar-header">
@@ -36,5 +32,6 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="cookieconsent" value="show" />
     </nav>
 }

@@ -2,4 +2,6 @@
 
 @inject IAssetService AssetService
 
-@await AssetService.GetAsync("ValidationScripts", FileType.Js)
+@section VendorScripts {
+    @await AssetService.GetAsync("ValidationScripts", FileType.Js)
+}

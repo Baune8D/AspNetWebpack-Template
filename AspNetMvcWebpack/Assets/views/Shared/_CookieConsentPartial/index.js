@@ -1,6 +1,6 @@
 /* This file can be accessed with the alias: Views/Shared/_CookieConsentPartial */
 
-(function CookieConsent() {
+if (document.getElementById('cookieconsent').value === 'show') {
   document
     .querySelector('#cookieConsent button[data-cookie-string]')
     .addEventListener(
@@ -11,4 +11,4 @@
       },
       false,
     );
-})();
+}
