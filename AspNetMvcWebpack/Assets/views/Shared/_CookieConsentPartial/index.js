@@ -1,6 +1,7 @@
 /* This file can be accessed with the alias: Views/Shared/_CookieConsentPartial */
 
-if (document.getElementById('cookieconsent').value === 'show') {
+const cookieConsentInput = document.getElementById('cookieconsent');
+if (cookieConsentInput != null && cookieConsentInput.value === 'show') {
   document
     .querySelector('#cookieConsent button[data-cookie-string]')
     .addEventListener(
