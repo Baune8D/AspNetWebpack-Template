@@ -44,7 +44,6 @@ package.json contains 4 scripts:
 Included is a C# service called ```AssetService```, this service can be used through DI in views.  
 It contains 1 function ```GetAsync``` which should be used to include bundles.
 ```csharp
-Task<HtmlString> GetAsync(FileType type, ScriptLoad load = ScriptLoad.Normal);
 Task<HtmlString> GetAsync(string resource, FileType type, ScriptLoad load = ScriptLoad.Normal);
 ```
 
