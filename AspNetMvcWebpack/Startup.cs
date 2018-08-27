@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Net.Http;
 using AspNetMvcWebpack.AssetHelpers;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +32,9 @@ namespace AspNetMvcWebpack
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            if (!Configuration.GetChildren().Any(x => x.Key == "Webpack"))
+                throw new ApplicationException();
+            
             services.Configure<WebpackOptions>(Configuration.GetSection("Webpack"));
             services.AddTransient<HttpClient>();
             services.AddSingleton<IAssetService, AssetService>();

@@ -11,9 +11,6 @@ namespace AspNetMvcWebpack.AssetHelpers
 {
     public class AssetService : IAssetService
     {
-        private const string PublicPath = "/dist/";
-        private const string ManifestFile = "manifest.json";
-
         private readonly HttpClient _httpClient;
 
         private readonly bool _developmentMode;
@@ -24,15 +21,20 @@ namespace AspNetMvcWebpack.AssetHelpers
 
         public AssetService(IHostingEnvironment hostingEnvironment, IOptions<WebpackOptions> options, HttpClient httpClient)
         {
+            if (options.Value == null)
+                throw new ArgumentNullException(nameof(options), "Webpack option cannot be null");
+
+            WebpackOptions webpack = options.Value;
+
             _developmentMode = hostingEnvironment.IsDevelopment();
 
             _manifestPath = _developmentMode
-                ? options.Value.DevServer + PublicPath + ManifestFile
-                : hostingEnvironment.WebRootPath + PublicPath + ManifestFile;
+                ? webpack.DevServer + webpack.AssetsPublicPath + webpack.ManifestFile
+                : hostingEnvironment.WebRootPath + webpack.AssetsPublicPath + webpack.ManifestFile;
 
             _assetPath = _developmentMode
-                ? options.Value.DevServer + PublicPath
-                : PublicPath;
+                ? webpack.DevServer + webpack.AssetsPublicPath
+                : webpack.AssetsPublicPath;
 
             if (_developmentMode) _httpClient = httpClient;
             else httpClient.Dispose();
