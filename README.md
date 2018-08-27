@@ -40,6 +40,7 @@ package.json contains 4 scripts:
 * ```dev``` will start a development server.
 * ```lint``` will lint all files using ```eslint``` and ```stylelint```.
 * ```format``` will format all files using ```prettier-eslint```.
+* ```stats``` will run Webpack build with bundle analyzer.
 
 Included is a C# service called ```AssetService```, this service can be used through DI in views.  
 It contains 1 function ```GetAsync``` which should be used to include bundles.
