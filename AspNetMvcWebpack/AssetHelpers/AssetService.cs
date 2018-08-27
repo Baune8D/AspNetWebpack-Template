@@ -11,7 +11,6 @@ namespace AspNetMvcWebpack.AssetHelpers
 {
     public class AssetService : IAssetService
     {
-        public const string DefaultResource = "Layout";
         private const string PublicPath = "/dist/";
         private const string ManifestFile = "manifest.json";
 
@@ -37,11 +36,6 @@ namespace AspNetMvcWebpack.AssetHelpers
 
             if (_developmentMode) _httpClient = httpClient;
             else httpClient.Dispose();
-        }
-
-        public virtual async Task<HtmlString> GetAsync(FileType type, ScriptLoad load = ScriptLoad.Normal)
-        {
-            return await GetAsync(DefaultResource, type, load);
         }
 
         public virtual async Task<HtmlString> GetAsync(string asset, FileType type, ScriptLoad load = ScriptLoad.Normal)
