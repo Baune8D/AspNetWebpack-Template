@@ -88,7 +88,7 @@ namespace AspNetMvcWebpack.AssetHelpers
                 case FileType.Js:
                     return $"<script src=\"{path}\" {loadType}></script>";
                 default:
-                    throw new ArgumentNullException(nameof(type));
+                    throw new ArgumentException($"Unknown type {type}", nameof(type));
             }
         }
 
