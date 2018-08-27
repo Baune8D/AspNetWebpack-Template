@@ -1,6 +1,7 @@
 const glob = require('glob');
 const path = require('path');
 const webpack = require('webpack');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -234,6 +235,9 @@ module.exports = (() => {
       ],
     };
     config.plugins.unshift(new CleanWebpackPlugin([output]));
+    if (process.env.STATS === '1') {
+      config.plugins.push(new BundleAnalyzerPlugin());
+    }
   }
   return config;
 })();
