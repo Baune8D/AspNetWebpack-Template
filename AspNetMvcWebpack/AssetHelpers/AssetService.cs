@@ -56,7 +56,7 @@ namespace AspNetMvcWebpack.AssetHelpers
                     throw new ArgumentException($"Unknown type {type}", nameof(type));
             }
 
-            asset = await GetFromManifestAsýnc(asset);
+            asset = await GetFromManifestAsync(asset);
 
             return asset != null
                 ? new HtmlString(GetTag(asset, type, load))
@@ -92,7 +92,7 @@ namespace AspNetMvcWebpack.AssetHelpers
             }
         }
 
-        private async Task<string> GetFromManifestAsýnc(string file)
+        private async Task<string> GetFromManifestAsync(string file)
         {
             JObject manifest;
 
