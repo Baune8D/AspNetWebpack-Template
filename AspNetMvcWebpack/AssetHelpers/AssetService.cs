@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Html;
@@ -11,7 +10,7 @@ namespace AspNetMvcWebpack.AssetHelpers
 {
     public class AssetService : IAssetService
     {
-        private readonly HttpClient _httpClient;
+        private readonly IAssetsHttpClient _assetsHttpClient;
 
         private readonly bool _developmentMode;
         private readonly string _manifestPath;
@@ -19,7 +18,7 @@ namespace AspNetMvcWebpack.AssetHelpers
 
         public JObject Manifest { get; protected set; }
 
-        public AssetService(IHostingEnvironment hostingEnvironment, IOptions<WebpackOptions> options, HttpClient httpClient)
+        public AssetService(IHostingEnvironment hostingEnvironment, IOptions<WebpackOptions> options, IAssetsHttpClient assetsHttpClient = null)
         {
             if (options.Value == null)
                 throw new ArgumentNullException(nameof(options), "Webpack option cannot be null");
@@ -29,15 +28,14 @@ namespace AspNetMvcWebpack.AssetHelpers
             _developmentMode = hostingEnvironment.IsDevelopment();
 
             _manifestPath = _developmentMode
-                ? webpack.DevServer + webpack.AssetsPublicPath + webpack.ManifestFile
+                ? null
                 : hostingEnvironment.WebRootPath + webpack.AssetsPublicPath + webpack.ManifestFile;
 
             _assetPath = _developmentMode
                 ? webpack.DevServer + webpack.AssetsPublicPath
                 : webpack.AssetsPublicPath;
 
-            if (_developmentMode) _httpClient = httpClient;
-            else httpClient.Dispose();
+            _assetsHttpClient = assetsHttpClient;
         }
 
         public virtual async Task<HtmlString> GetAsync(string asset, FileType type, ScriptLoad load = ScriptLoad.Normal)
@@ -101,7 +99,7 @@ namespace AspNetMvcWebpack.AssetHelpers
             if (Manifest == null)
             {
                 var json = _developmentMode
-                    ? await _httpClient.GetStringAsync(_manifestPath)
+                    ? await _assetsHttpClient.GetManifestContent()
                     : File.ReadAllText(_manifestPath);
 
                 manifest = JObject.Parse(json);
