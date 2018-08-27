@@ -1,5 +1,3 @@
-using System.IO;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AspNetMvcWebpack.AssetHelpers
@@ -9,10 +7,11 @@ namespace AspNetMvcWebpack.AssetHelpers
         public static string GetBundleName(this IHtmlHelper html)
         {
             var path = html.ViewContext.View.Path;
-            var controller = Path.GetDirectoryName(path)?.Split('\\').Last();
-            var view = Path.GetFileNameWithoutExtension(path);
-            if (string.IsNullOrEmpty(controller) || string.IsNullOrEmpty(view)) return null;
-            return controller + "_" + view;
+            var viewPaths = path
+                .Replace("/Views/", string.Empty)
+                .Replace(".cshtml", string.Empty)
+                .Split("/");
+            return string.Join('_', viewPaths);
         }
     }
 }
