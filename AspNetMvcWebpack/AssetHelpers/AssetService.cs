@@ -55,7 +55,7 @@ namespace AspNetMvcWebpack.AssetHelpers
                     asset += ".js";
                     break;
                 default:
-                    throw new ArgumentNullException(nameof(type));
+                    throw new ArgumentException($"Unknown type {type}", nameof(type));
             }
 
             asset = await GetFromManifestAsýnc(asset);
