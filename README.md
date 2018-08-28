@@ -7,6 +7,7 @@ This template implements the following front-end technologies:
 * SCSS (Extracted to seperate files)
 * CSS Modules (By using ```.module.scss``` suffix)
 * Autoprefixer
+* Image optimizations (In production)
 * Code splitting (Using dynamic imports ```import()```)
 * Sourcemaps
 * Dev server (No physical files are written in development)
