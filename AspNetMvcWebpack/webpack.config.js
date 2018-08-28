@@ -1,3 +1,5 @@
+/* eslint global-require: "off" */
+
 const glob = require('glob');
 const path = require('path');
 const webpack = require('webpack');
@@ -53,6 +55,41 @@ module.exports = (() => {
     loader: 'sass-loader',
     options: {
       sourceMap: true,
+    },
+  };
+
+  const imgLoader = {
+    loader: 'img-loader',
+    options: {
+      plugins: !isDev && [
+        require('imagemin-gifsicle')({}),
+        require('imagemin-mozjpeg')({}),
+        require('imagemin-optipng')({}),
+        require('imagemin-svgo')({}),
+      ],
+    },
+  };
+
+  const urlLoadersLimit = 8192;
+
+  const fileLoaderNameOptions = file => {
+    let filename;
+    if (file.includes('node_modules')) {
+      filename = 'vendor/[name].[ext]';
+    } else {
+      filename = '[path][name].[ext]';
+    }
+    if (!isDev) {
+      filename += '?v=[hash]';
+    }
+    return filename;
+  };
+
+  const urlLoader = {
+    loader: 'url-loader',
+    options: {
+      limit: urlLoadersLimit,
+      name: fileLoaderNameOptions,
     },
   };
 
@@ -156,25 +193,27 @@ module.exports = (() => {
           ],
         },
         {
-          test: /\.(otf|eot|ttf|woff|woff2|svg|jpg|jpeg|png|gif)$/,
-          use: {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-              name: file => {
-                let filename;
-                if (file.includes('node_modules')) {
-                  filename = 'vendor/[name].[ext]';
-                } else {
-                  filename = '[path][name].[ext]';
-                }
-                if (!isDev) {
-                  filename += '?v=[hash]';
-                }
-                return filename;
+          test: /\.svg$/,
+          use: [
+            {
+              loader: 'svg-url-loader',
+              options: {
+                limit: urlLoadersLimit,
+                stripdeclarations: true,
+                iesafe: true,
+                name: fileLoaderNameOptions,
               },
             },
-          },
+            imgLoader,
+          ],
+        },
+        {
+          test: /\.(jpg|jpeg|png|gif)$/,
+          use: [urlLoader, imgLoader],
+        },
+        {
+          test: /\.(otf|eot|ttf|woff|woff2)$/,
+          use: urlLoader,
         },
       ],
     },
