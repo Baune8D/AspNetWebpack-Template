@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Net.Http;
 using AspNetMvcWebpack.AssetHelpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,9 +34,9 @@ namespace AspNetMvcWebpack
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            if (!Configuration.GetChildren().Any(x => x.Key == "Webpack"))
+            if (Configuration.GetChildren().All(x => x.Key != "Webpack"))
                 throw new ApplicationException();
-            
+
             services.Configure<WebpackOptions>(Configuration.GetSection("Webpack"));
 
             if (Env.IsDevelopment())
