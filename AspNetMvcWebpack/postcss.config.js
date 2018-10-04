@@ -1,7 +1,6 @@
 module.exports = ctx => ({
   plugins: {
     'postcss-preset-env': {},
-    autoprefixer: {},
     cssnano:
       ctx.env === 'development'
         ? false
