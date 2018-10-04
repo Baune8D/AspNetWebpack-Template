@@ -17,12 +17,15 @@
       {
         "devDependencies": [
           "*.config.js"
-        ]
+        ],
+        "optionalDependencies": false
       }
     ],
     "import/no-unresolved": [
       "error",
       {
+        "commonjs": true,
+        "caseSensitive": true,
         "ignore": [
           "Bundles/*",
           "Components/*",
