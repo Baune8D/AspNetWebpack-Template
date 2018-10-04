@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "ms-vscode.csharp",
+    "editorconfig.editorconfig",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ]
+}
