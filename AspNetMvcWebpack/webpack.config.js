@@ -108,15 +108,15 @@ module.exports = (() => {
       });
 
       // Get all Assets/views (excluding partials)
-      const viewGlob = path.resolve('./Assets/views', '*/*/@(I|i)ndex.js');
+      const viewPath = './Assets/views';
+      const viewGlob = path.resolve(viewPath, '**/@(I|i)ndex.js');
       const views = glob.sync(viewGlob, {
-        ignore: ['**/_*', '**/_*/**'],
+        ignore: ['**/Assets/views/**/_*', '**/Assets/views/**/_*/**'],
       });
+      const currentPath = `${path.resolve(viewPath).replace(/\\/g, '/')}/`;
       Object.values(views).forEach(view => {
-        const filePath = path.dirname(view);
-        const splitPath = filePath.split('/');
-        const pathCount = splitPath.length;
-        const name = `${splitPath[pathCount - 2]}_${splitPath[pathCount - 1]}`;
+        const filePath = path.dirname(view).replace(currentPath, '');
+        const name = filePath.split('/').join('_');
         entries[name] = view;
       });
 
