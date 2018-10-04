@@ -19,6 +19,7 @@
     ".vs": true,
     "**/node_modules": true,
     "**/bin": true,
-    "**/obj": true
+    "**/obj": true,
+    "**/wwwroot/dist": true
   }
 }
