@@ -47,7 +47,6 @@ module.exports = (() => {
     loader: 'resolve-url-loader',
     options: {
       sourceMap: isDev,
-      root: assets,
     },
   };
 
