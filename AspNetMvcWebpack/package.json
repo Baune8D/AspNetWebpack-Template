@@ -60,9 +60,9 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot",
-    "format": "prettier-eslint --write \"**/*.{js,scss}\"",
+    "format": "prettier-eslint --write \"**/*.{js,css,scss}\"",
     "lint": "eslint \"**/*.js\" && stylelint \"**/*.{css,scss}\"",
-    "start": "npm run dev",
-    "stats": "cross-env NODE_ENV=production STATS=1 webpack"
+    "stats": "cross-env NODE_ENV=production STATS=1 webpack",
+    "start": "npm run dev"
   }
 }
