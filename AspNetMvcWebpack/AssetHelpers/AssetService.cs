@@ -66,8 +66,14 @@ namespace AspNetMvcWebpack.AssetHelpers
         private string GetTag(string file, FileType type, ScriptLoad load)
         {
             var path = _assetPath + file;
-            var loadType = string.Empty;
 
+            var crossOrigin = string.Empty;
+            if (_developmentMode)
+            {
+                crossOrigin = "crossorigin=\"anonymous\"";
+            }
+
+            var loadType = _developmentMode ? " " : string.Empty;
             switch (load)
             {
                 case ScriptLoad.Async:
@@ -86,7 +92,7 @@ namespace AspNetMvcWebpack.AssetHelpers
                 case FileType.Css:
                     return $"<link href=\"{path}\" rel=\"stylesheet\" />";
                 case FileType.Js:
-                    return $"<script src=\"{path}\" {loadType}></script>";
+                    return $"<script src=\"{path}\" {crossOrigin}{loadType}></script>";
                 default:
                     throw new ArgumentException($"Unknown type {type}", nameof(type));
             }
