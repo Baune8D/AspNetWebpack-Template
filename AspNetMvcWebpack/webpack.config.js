@@ -246,16 +246,13 @@ module.exports = (() => {
   };
 
   if (isDev) {
-    config.serve = {
-      devMiddleware: {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-        publicPath,
-        stats,
+    config.devServer = {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
       },
+      publicPath,
       port: 9000,
-      clipboard: false,
+      stats,
     };
     config.devtool = 'cheap-module-source-map';
   } else {
