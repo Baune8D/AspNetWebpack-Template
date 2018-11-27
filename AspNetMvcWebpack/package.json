@@ -56,11 +56,11 @@
     "webpack-dev-server": "^3.1.10"
   },
   "scripts": {
+    "analyze": "cross-env NODE_ENV=production ANALYZE=true webpack",
     "build": "cross-env NODE_ENV=production webpack",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot",
-    "format": "prettier-eslint --write \"**/*.{js,css,scss}\"",
+    "config-check": "eslint --print-config . | eslint-config-prettier-check && stylelint-config-prettier-check",
+    "format": "prettier --write \"**/*.{js,css,scss}\" && eslint --fix \"**/*.js\"",
     "lint": "eslint \"**/*.js\" && stylelint \"**/*.{css,scss}\"",
-    "stats": "cross-env NODE_ENV=production STATS=1 webpack",
-    "start": "npm run dev"
+    "start": "cross-env NODE_ENV=development webpack-dev-server --hot"
   }
 }

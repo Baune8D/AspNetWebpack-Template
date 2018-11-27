@@ -1,5 +1,3 @@
-/* eslint global-require: "off" */
-
 const glob = require('glob');
 const path = require('path');
 const webpack = require('webpack');
@@ -60,10 +58,12 @@ module.exports = (() => {
     loader: 'img-loader',
     options: {
       plugins: !isDev && [
+        /* eslint-disable global-require */
         require('imagemin-gifsicle')({}),
         require('imagemin-mozjpeg')({}),
         require('imagemin-optipng')({}),
         require('imagemin-svgo')({}),
+        /* eslint-enable global-require */
       ],
     },
   };
@@ -256,7 +256,7 @@ module.exports = (() => {
     config.devtool = 'cheap-module-source-map';
   } else {
     config.plugins.unshift(new CleanWebpackPlugin([output]));
-    if (process.env.STATS === '1') {
+    if (process.env.ANALYZE === 'true') {
       config.plugins.push(new BundleAnalyzerPlugin());
     }
   }
