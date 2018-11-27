@@ -12,34 +12,9 @@
   ],
   "parser": "babel-eslint",
   "rules": {
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": [
-          "*.config.js"
-        ],
-        "optionalDependencies": false
-      }
-    ],
-    "import/no-unresolved": [
-      "error",
-      {
-        "commonjs": true,
-        "caseSensitive": true,
-        "ignore": [
-          "Bundles/*",
-          "Components/*",
-          "Images/*",
-          "Json/*",
-          "Modules/*",
-          "Vendor/*",
-          "Scipts/*",
-          "Styles/*",
-          "Views/*"
-        ]
-      }
-    ],
-    "import/prefer-default-export": "off",
     "linebreak-style": "off"
+  },
+  "settings": {
+    "import/resolver": "webpack"
   }
 }
