@@ -6,7 +6,6 @@ const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
 
 module.exports = (() => {
@@ -256,19 +255,6 @@ module.exports = (() => {
     };
     config.devtool = 'cheap-module-source-map';
   } else {
-    config.optimization = {
-      minimizer: [
-        new UglifyJsPlugin({
-          parallel: true,
-          sourceMap: true,
-          uglifyOptions: {
-            output: {
-              comments: false,
-            },
-          },
-        }),
-      ],
-    };
     config.plugins.unshift(new CleanWebpackPlugin([output]));
     if (process.env.STATS === '1') {
       config.plugins.push(new BundleAnalyzerPlugin());
