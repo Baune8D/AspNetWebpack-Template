@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AspNetMvcWebpack</title>
 
-    @await AssetService.GetAsync("Vendor", FileType.Css)
+    @await AssetService.GetAsync("VendorDll", FileType.Css)
     @RenderSection("VendorStyles", required: false)
     @await AssetService.GetAsync("Layout", FileType.Css)
     @await AssetService.GetAsync(view, FileType.Css)
@@ -51,7 +51,7 @@
         </footer>
     </div>
 
-    @await AssetService.GetAsync("Vendor", FileType.Js)
+    @await AssetService.GetAsync("VendorDll", FileType.Js)
     @RenderSection("VendorScripts", required: false)
     @await AssetService.GetAsync("Layout", FileType.Js, ScriptLoad.Defer)
     @await AssetService.GetAsync(view, FileType.Js, ScriptLoad.Defer)

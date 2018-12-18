@@ -41,6 +41,7 @@
     "prettier": "^1.15.2",
     "resolve-url-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
+    "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
     "stylelint": "^9.8.0",
     "stylelint-config-prettier": "^4.0.0",
@@ -51,16 +52,17 @@
     "url-loader": "^1.1.2",
     "webpack": "^4.26.1",
     "webpack-assets-manifest": "^3.1.1",
+    "webpack-babel-env-deps": "^1.4.3",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
   },
   "scripts": {
-    "analyze": "cross-env NODE_ENV=production ANALYZE=true webpack",
-    "build": "cross-env NODE_ENV=production webpack",
+    "analyze": "cross-env-shell NODE_ENV=production ANALYZE=true \"webpack --config webpack.config.dll.js && webpack\"",
+    "build": "cross-env-shell NODE_ENV=production \"webpack --config webpack.config.dll.js && webpack\"",
     "config-check": "eslint --print-config . | eslint-config-prettier-check && stylelint-config-prettier-check",
     "format": "prettier --write \"**/*.{js,css,scss}\" && eslint --fix \"**/*.js\"",
     "lint": "eslint \"**/*.js\" && stylelint \"**/*.{css,scss}\"",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --hot"
+    "start": "cross-env-shell NODE_ENV=development \"webpack --config webpack.config.dll.js && webpack-dev-server --hot\""
   }
 }

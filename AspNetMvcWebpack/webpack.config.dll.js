@@ -1,29 +1,24 @@
-const glob = require('glob');
 const path = require('path');
 const webpack = require('webpack');
 const babelEnvDeps = require('webpack-babel-env-deps');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
 
 module.exports = (() => {
   const isDev = process.env.NODE_ENV === 'development';
-  const assets = path.resolve('./Assets');
   const output = isDev
     ? path.resolve('./.vendor-dll/dist')
     : path.resolve('./wwwroot/dist');
-  const nodeModules = path.resolve('./node_modules');
-  const publicPath = isDev ? 'http://localhost:9000/dist/' : '/dist/';
 
   const stats = {
     children: false,
     colors: true,
   };
 
-  const cssLoader = (importLoaders, modules) => ({
+  const cssLoader = importLoaders => ({
     loader: 'css-loader',
     options: {
-      modules,
       importLoaders,
       sourceMap: isDev,
       localIdentName: isDev
@@ -39,13 +34,6 @@ module.exports = (() => {
       config: {
         path: path.resolve('.'),
       },
-    },
-  };
-
-  const resolveUrlLoader = {
-    loader: 'resolve-url-loader',
-    options: {
-      sourceMap: isDev,
     },
   };
 
@@ -73,16 +61,10 @@ module.exports = (() => {
   const urlLoadersLimit = 8192;
 
   const fileLoaderNameOptions = file => {
-    let filename;
     if (file.includes('node_modules')) {
-      filename = 'vendor/[name].[ext]';
-    } else {
-      filename = '[path][name].[ext]';
+      return 'vendor/[name].[ext]';
     }
-    if (!isDev) {
-      filename += '?v=[hash]';
-    }
-    return filename;
+    return '[path][name].[ext]';
   };
 
   const urlLoader = {
@@ -95,48 +77,13 @@ module.exports = (() => {
 
   const config = {
     stats,
-    context: assets,
-    entry: (() => {
-      const entries = {};
-
-      // Get all Assets/bundles
-      const bundleGlob = path.resolve('./Assets/bundles', '*.js');
-      const bundles = glob.sync(bundleGlob);
-      Object.values(bundles).forEach(bundle => {
-        const ext = path.extname(bundle);
-        const name = path.basename(bundle, ext);
-        entries[name] = bundle;
-      });
-
-      // Get all Assets/views (excluding partials)
-      const viewPath = './Assets/views';
-      const viewGlob = path.resolve(viewPath, '**/@(I|i)ndex.js');
-      const views = glob.sync(viewGlob, {
-        ignore: ['**/Assets/views/**/_*', '**/Assets/views/**/_*/**'],
-      });
-      const currentPath = `${path.resolve(viewPath).replace(/\\/g, '/')}/`;
-      Object.values(views).forEach(view => {
-        const filePath = path.dirname(view).replace(currentPath, '');
-        const name = filePath.split('/').join('_');
-        entries[name] = view;
-      });
-
-      return entries;
-    })(),
-    resolve: {
-      alias: {
-        Bundles: path.resolve(assets, 'bundles'),
-        Components: path.resolve(assets, 'components'),
-        Images: path.resolve(assets, 'images'),
-        Scripts: path.resolve(assets, 'scripts'),
-        Styles: path.resolve(assets, 'styles'),
-        Vendor: path.resolve(assets, 'vendor'),
-        Views: path.resolve(assets, 'views'),
-      },
+    context: path.resolve('./Assets'),
+    entry: {
+      VendorDll: [path.resolve('./Assets/vendor.dll.js')],
     },
     output: {
       path: output,
-      publicPath,
+      publicPath: isDev ? 'http://localhost:9000/dist/' : '/dist/',
       filename: isDev ? '[name].js' : '[name].min.js?v=[contenthash]',
       chunkFilename: isDev
         ? '[name].chunk.js'
@@ -149,11 +96,6 @@ module.exports = (() => {
           test: /\.js$/,
           use: 'source-map-loader',
           enforce: 'pre',
-        },
-        {
-          test: /\.js$/,
-          exclude: nodeModules,
-          use: 'babel-loader',
         },
         {
           test: /\.js$/,
@@ -170,33 +112,11 @@ module.exports = (() => {
         },
         {
           test: /\.scss$/,
-          include: nodeModules,
+          include: path.resolve('./node_modules'),
           use: [
             MiniCssExtractPlugin.loader,
             cssLoader(2, false),
             postCssLoader,
-            sassLoader,
-          ],
-        },
-        {
-          test: /\.scss$/,
-          exclude: [nodeModules, /\.module\.scss$/],
-          use: [
-            MiniCssExtractPlugin.loader,
-            cssLoader(3, false),
-            postCssLoader,
-            resolveUrlLoader,
-            sassLoader,
-          ],
-        },
-        {
-          test: /\.module\.scss$/,
-          exclude: nodeModules,
-          use: [
-            MiniCssExtractPlugin.loader,
-            cssLoader(3, true),
-            postCssLoader,
-            resolveUrlLoader,
             sassLoader,
           ],
         },
@@ -251,27 +171,17 @@ module.exports = (() => {
           };
         },
       }),
-      new webpack.DllReferencePlugin({
-        context: assets,
-        // eslint-disable-next-line global-require, import/no-dynamic-require
-        manifest: require(path.resolve(output, 'dll-manifest.json')),
+      new webpack.DllPlugin({
+        name: '[name]',
+        path: path.resolve(output, 'dll-manifest.json'),
       }),
     ],
   };
 
   if (isDev) {
-    config.devServer = {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-      contentBase: path.resolve('./.vendor-dll'),
-      publicPath,
-      port: 9000,
-      stats,
-    };
     config.devtool = 'cheap-module-source-map';
-  } else if (process.env.ANALYZE === 'true') {
-    config.plugins.push(new BundleAnalyzerPlugin());
+  } else {
+    config.plugins.unshift(new CleanWebpackPlugin([output]));
   }
 
   return config;
