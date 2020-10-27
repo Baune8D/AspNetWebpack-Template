@@ -40,7 +40,7 @@ namespace AspNetCoreWebpack.AssetHelpers
                     break;
                 default:
                     _assetBaseFilePath = env.WebRootPath + options.Value.AssetsPublicPath;
-                    _manifestPath = env.ContentRootPath + "/" + options.Value.ManifestFile;
+                    _manifestPath = _assetBaseFilePath + options.Value.ManifestFile;
                     break;
             }
 

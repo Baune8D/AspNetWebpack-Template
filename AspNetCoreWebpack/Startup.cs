@@ -38,11 +38,7 @@ namespace AspNetCoreWebpack
 
             services.Configure<WebpackOptions>(Configuration.GetSection("Webpack"));
 
-            if (Env.IsDevelopment())
-            {
-                // Add HttpClient for use in AssetService
-                services.AddHttpClient();
-            }
+            services.AddHttpClient();
 
             services.AddSingleton<IAssetService, AssetService>();
         }
