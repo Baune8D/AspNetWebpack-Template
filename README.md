@@ -25,6 +25,11 @@ This template implements the following front-end features:
 * Editorconfig
 * Sourcemaps
 
+Start development server using ```npm start``` in project folder.  
+Build production files using ```npm run build``` in project folder.
+
+The resulting bundles can be analyzed using ```npm run analyze``` in project folder.
+
 Everything front-end related resides in the ```Assets``` folder in the project root, and/or in the root of ```Areas```, check out those folders for examples.
 
 Bundles will be built for folders under ```pages``` and ```views``` that matches an MVC view or Razor page.  
