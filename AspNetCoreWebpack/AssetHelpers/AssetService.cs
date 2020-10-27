@@ -122,7 +122,7 @@ namespace AspNetCoreWebpack.AssetHelpers
             if (_manifest == null)
             {
                 var json = _developmentMode
-                    ? await _httpClient.GetStringAsync(new Uri(_manifestPath)).ConfigureAwait(false)
+                    ? await GetDevelopmentManifestAsync()
                     : await File.ReadAllTextAsync(_manifestPath).ConfigureAwait(false);
 
                 manifest = JsonDocument.Parse(json);
@@ -143,6 +143,18 @@ namespace AspNetCoreWebpack.AssetHelpers
             catch (KeyNotFoundException)
             {
                 return null;
+            }
+        }
+
+        private async Task<string> GetDevelopmentManifestAsync()
+        {
+            try
+            {
+                return await _httpClient.GetStringAsync(new Uri(_manifestPath)).ConfigureAwait(false);
+            }
+            catch (HttpRequestException)
+            {
+                throw new Exception("Webpack Dev Server not started!");
             }
         }
 
