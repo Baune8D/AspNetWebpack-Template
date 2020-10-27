@@ -1,6 +1,8 @@
 # AspNetCoreWebpack
 
-This project is a template for using ASP.NET Core with Webpack and ES6 Modules
+This project is a template for using ASP.NET Core with Webpack and ES6 Modules.  
+This architecture allows you to use the power of Webpack with any type of ASP.NET Core project.  
+It can easily be extended to support eg, TypeScript, Vue.js or whatever else you want.
 
 This template implements the following front-end features:
 * ES transpiling (Using Babel)
@@ -28,4 +30,4 @@ Everything front-end related resides in the ```Assets``` folder in the project r
 Bundles will be built for folders under ```pages``` and ```views``` that matches an MVC view or Razor page.  
 Bundles will not be built for partial MVC views and Razor pages (files starting with a underscore).
 
-The layout view will automatically figure out if a bundle exists, for a page and include it if it does.
+The layout view will automatically figure out if a bundle exists for a page and include it if it does.
