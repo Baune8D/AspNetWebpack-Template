@@ -1,21 +1,21 @@
 # AspNetCoreWebpack
 
 This project is a template for using ASP.NET Core with Webpack and ES6 Modules.  
-This architecture allows you to use the power of Webpack with any type of ASP.NET Core project.  
-It can easily be extended to support eg, TypeScript, Vue.js or whatever else you want.
+This architecture allows you to use the power of Webpack with any type of ASP.NET Core project, SPA or MPA.  
+It can easily be extended to support eg, TypeScript, Vue.js or whatever else you need.
 
 This template implements the following front-end features:
-* ES transpiling (Using Babel)
+* Transpiling (Using Babel)
 * Nullish Coalescing Operator (Using Babel plugin)
 * Optional Chaining (Using Babel plugin)
 * Code splitting (Using Babel plugin and Webpack SplitChunks)
-* SCSS support (Defaults to extracting to separate SCSS file)
+* SCSS support (Defaults to extracting to separate CSS file)
 * CSS Modules (By using ```.module.scss``` suffix)
 * Lazy loading CSS/SCSS (By using ```.lazy.scss``` suffix)
-* Injecting CSS/SCSS (By using ```.scss?inject``` query string)
+* Injecting CSS/SCSS as style tag (By using ```.scss?inject``` query string)
 * PostCSS support
-* Autoprefixer
-* Image optimizations
+* PostCSS Preset Env (Includes Autoprefixer)
+* Image optimizations (Only from node_modules)
 * Dev server (No physical files are written in development)
 * Hot Module Replacement
 * Cache busting
@@ -24,6 +24,15 @@ This template implements the following front-end features:
 * Auto formatting (Using Prettier)
 * Editorconfig
 * Sourcemaps
+
+The config created the following bundles:
+* ```runtime.js``` containing Webpack runtime
+* ```Vendors.js``` containing all vendor code
+* ```Commons.js``` containing all shared code
+
+It also creates a view specific bundle e.g. ```Home_Index.js```
+
+Alternatively bundles can be manually created by adding files to ```Assets/bundles```
 
 Install npm packages with ```npm install``` in project folder.  
 Start development server using ```npm start``` in project folder.  
