@@ -25,8 +25,11 @@ This template implements the following front-end features:
 * Editorconfig
 * Sourcemaps
 
+Install npm packages with ```npm install``` in project folder.  
 Start development server using ```npm start``` in project folder.  
-Build production files using ```npm run build``` in project folder.
+Build production files using ```npm run build``` in project folder.  
+Lint project using ```npm run lint``` in project folder.  
+Auto format project using ```npm run format``` in project folder.
 
 The resulting bundles can be analyzed using ```npm run analyze``` in project folder.
 
