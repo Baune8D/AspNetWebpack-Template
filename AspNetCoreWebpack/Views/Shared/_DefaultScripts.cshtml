@@ -1,0 +1,21 @@
+@using AspNetCoreWebpack.AssetHelpers
+@using Microsoft.AspNetCore.Html
+
+@model string
+
+@inject IAssetService AssetService
+
+@await AssetService.GetScriptAsync("runtime", ScriptLoad.Defer)
+@await AssetService.GetScriptAsync("Vendors", ScriptLoad.Defer)
+@await AssetService.GetScriptAsync("Commons", ScriptLoad.Defer)
+@{
+    var script = await AssetService.GetScriptAsync(Model, ScriptLoad.Defer);
+    if (script == HtmlString.Empty)
+    {
+        @await AssetService.GetScriptAsync("Layout", ScriptLoad.Defer)
+    }
+    else
+    {
+        @script
+    }
+}

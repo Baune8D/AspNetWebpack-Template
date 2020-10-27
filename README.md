@@ -1,53 +1,31 @@
-# AspNetMvcWebpack
+# AspNetCoreWebpack
 
-This project shows the default MVC template but using Webpack for the front-end.
+This project is a template for using ASP.NET Core with Webpack and ES6 Modules
 
-This template implements the following front-end technologies:
-* ES6/7/8 (Babel)
-* SCSS (Extracted to seperate files)
+This template implements the following front-end features:
+* ES transpiling (Using Babel)
+* Nullish Coalescing Operator (Using Babel plugin)
+* Optional Chaining (Using Babel plugin)
+* Code splitting (Using Babel plugin and Webpack SplitChunks)
+* SCSS support (Defaults to extracting to separate SCSS file)
 * CSS Modules (By using ```.module.scss``` suffix)
+* Lazy loading CSS/SCSS (By using ```.lazy.scss``` suffix)
+* Injecting CSS/SCSS (By using ```.scss?inject``` query string)
+* PostCSS support
 * Autoprefixer
-* Image optimizations (In production)
-* Code splitting (Using dynamic imports ```import()```)
-* Sourcemaps
+* Image optimizations
 * Dev server (No physical files are written in development)
 * Hot Module Replacement
-* Cache busting (When compiling for production)
-* Linting (Airbnb)
-* Auto formatting (Prettier)
+* Cache busting
+* JS linting (Using ESLint)
+* CSS/SCSS linting (Using StyleLint)
+* Auto formatting (Using Prettier)
 * Editorconfig
-* DLL (For all shared modules)
+* Sourcemaps
 
-The template is setup to always include 3 bundles:
-* ```VendorDll``` Include all globally used vendor modules.
-* ```Layout``` Include all global layout code.
-* ```<View>``` Bundle including view specific code.
+Everything front-end related resides in the ```Assets``` folder in the project root, and/or in the root of ```Areas```, check out those folders for examples.
 
-The root of all front-end code is the ```Assets``` folder.  
-The following folders exists here:
-* ```bundles``` use this folder to manually generate bundles.
-* ```components``` for building components that can consist of multiple files.
-* ```images``` for storing images for use in Webpack compiled files.
-* ```scripts``` for storing single JS files.
-* ```styles``` for all shared SCSS files.
-* ```vendor``` for keeping 3rd party files not available on npm.¨
-* ```views``` for JS and SCSS specific to MVC views. (Non-partial views are auto generated as bundles)
+Bundles will be built for folders under ```pages``` and ```views``` that matches an MVC view or Razor page.  
+Bundles will not be built for partial MVC views and Razor pages (files starting with a underscore).
 
-All folders has Webpack aliases specified. See source for a better understanding.
-
-package.json contains 4 scripts:
-* ```analyze``` will run Webpack build with bundle analyzer.
-* ```build``` will compile production ready files to ```wwwroot/dist```.
-* ```config-check``` will check for conflicting linting rules.
-* ```format``` will format all files using Prettier and ESLint.
-* ```lint``` will lint all files using ESLint and stylelint.
-* ```start``` will start a development server.
-
-Included is a C# service called ```AssetService```, this service can be used through DI in views.  
-It contains 1 function ```GetAsync``` which should be used to include bundles.
-```csharp
-Task<HtmlString> GetAsync(string resource, FileType type, ScriptLoad load = ScriptLoad.Normal);
-```
-
-Non partial views will default to loading the view specific bundle if it exists.  
-To override this behaviour, a bundle can be specified manually with ```ViewData["Bundle"]```
+The layout view will automatically figure out if a bundle exists, for a page and include it if it does.

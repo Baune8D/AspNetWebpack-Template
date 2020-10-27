@@ -1,0 +1,20 @@
+@using Microsoft.AspNetCore.Html
+@using AspNetCoreWebpack.AssetHelpers
+
+@model string
+
+@inject IAssetService AssetService
+
+@await AssetService.GetStyleAsync("Vendors")
+@await AssetService.GetStyleAsync("Commons")
+@{
+    var stylesheet = await AssetService.GetStyleAsync(Model);
+    if (stylesheet == HtmlString.Empty)
+    {
+        @await AssetService.GetStyleAsync("Layout")
+    }
+    else
+    {
+        @stylesheet
+    }
+}

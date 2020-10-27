@@ -1,7 +1,0 @@
-@using AspNetMvcWebpack.AssetHelpers
-
-@inject IAssetService AssetService
-
-@section VendorScripts {
-    @await AssetService.GetAsync("ValidationScripts", FileType.Js)
-}

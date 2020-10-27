@@ -1,0 +1,27 @@
+@using AspNetCoreWebpack.AssetHelpers
+
+@inject IAssetService AssetService
+
+@{
+    var bundle = ViewData.GetBundleName() ?? Html.GetBundleName();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AspNetCoreWebpack</title>
+
+    @await RenderSectionAsync("Head", required: false)
+    <partial name="_DefaultStyles" model="bundle" />
+</head>
+<body>
+    <div class="container text-center mt-5">
+        @RenderBody()
+    </div>
+
+    <partial name="_DefaultScripts" model="bundle"/>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
