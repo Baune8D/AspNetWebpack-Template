@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetWebpack.AssetHelpers" Version="0.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" Condition="'$(Configuration)' == 'Debug'" />
   </ItemGroup>
 

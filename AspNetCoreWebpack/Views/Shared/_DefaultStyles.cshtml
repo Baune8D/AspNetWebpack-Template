@@ -1,17 +1,17 @@
 @using Microsoft.AspNetCore.Html
-@using AspNetCoreWebpack.AssetHelpers
+@using AspNetWebpack.AssetHelpers
 
 @model string
 
 @inject IAssetService AssetService
 
-@await AssetService.GetStyleAsync("Vendors")
-@await AssetService.GetStyleAsync("Commons")
+@await AssetService.GetLinkTagAsync("Vendors")
+@await AssetService.GetLinkTagAsync("Commons")
 @{
-    var stylesheet = await AssetService.GetStyleAsync(Model);
+    var stylesheet = await AssetService.GetLinkTagAsync(Model);
     if (stylesheet == HtmlString.Empty)
     {
-        @await AssetService.GetStyleAsync("Layout")
+        @await AssetService.GetLinkTagAsync("Layout")
     }
     else
     {
