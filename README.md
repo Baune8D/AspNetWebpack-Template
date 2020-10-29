@@ -1,4 +1,4 @@
-# AspNetCoreWebpack
+# AspNetWebpack
 
 This project is a template for using ASP.NET Core with Webpack and ES6 Modules.  
 This architecture allows you to use the power of Webpack with any type of ASP.NET Core project, SPA or MPA.  

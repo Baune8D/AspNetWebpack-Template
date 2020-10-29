@@ -6,9 +6,9 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/AspNetCoreWebpack/bin/Debug/netcoreapp3.1/AspNetCoreWebpack.dll",
+      "program": "${workspaceFolder}/AspNetWebpack/bin/Debug/netcoreapp3.1/AspNetWebpack.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/AspNetCoreWebpack",
+      "cwd": "${workspaceFolder}/AspNetWebpack",
       "stopAtEntry": false,
       "internalConsoleOptions": "openOnSessionStart",
       "launchBrowser": {

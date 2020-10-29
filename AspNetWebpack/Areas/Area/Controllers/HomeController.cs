@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCoreWebpack.Areas.Area.Controllers
+namespace AspNetWebpack.Areas.Area.Controllers
 {
     [Area("Area")]
     public class HomeController: Controller

@@ -12,7 +12,7 @@
     ]
   },
   "eslint.workingDirectories": [
-    "./AspNetCoreWebpack"
+    "./AspNetWebpack"
   ],
   "editor.formatOnSave": false,
   "[javascript]": {
