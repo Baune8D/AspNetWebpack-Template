@@ -6,9 +6,9 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/AspNetWebpack/bin/Debug/netcoreapp3.1/AspNetWebpack.dll",
+      "program": "${workspaceFolder}/src/AspNetWebpack/bin/Debug/netcoreapp3.1/AspNetWebpack.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/AspNetWebpack",
+      "cwd": "${workspaceFolder}/src/AspNetWebpack",
       "stopAtEntry": false,
       "internalConsoleOptions": "openOnSessionStart",
       "launchBrowser": {
@@ -29,7 +29,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "sourceFileMap": {
-        "/Views": "${workspaceFolder}/Views"
+        "/Views": "${workspaceFolder}/src/AspNetWebpack/Views"
       }
     },
     {

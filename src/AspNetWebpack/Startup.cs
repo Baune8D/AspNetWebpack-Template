@@ -34,11 +34,7 @@ namespace AspNetWebpack
             }
             #endif
 
-            services.Configure<WebpackOptions>(Configuration.GetSection("Webpack"));
-
-            services.AddHttpClient();
-
-            services.AddSingleton<IAssetService, AssetService>();
+            services.AddAssetHelpers(Configuration, Env);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

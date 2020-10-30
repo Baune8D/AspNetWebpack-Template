@@ -7,7 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/AspNetWebpack/AspNetWebpack.csproj"
+        "${workspaceFolder}/src/AspNetWebpack/AspNetWebpack.csproj"
       ],
       "problemMatcher": "$msCompile"
     }
