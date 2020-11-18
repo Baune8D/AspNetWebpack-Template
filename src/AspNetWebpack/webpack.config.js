@@ -1,9 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-const glob = require('glob');
 const path = require('path');
 const webpack = require('webpack');
-const babelEnvDeps = require('webpack-babel-env-deps');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
 const TerserJSPlugin = require('terser-webpack-plugin');
@@ -11,12 +9,10 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const getEntryPoints = require('./AssetHelpers/entries');
-const loaders = require('./AssetHelpers/loaders');
+const configBuilder = require('aspnet-webpack');
 
 module.exports = (() => {
   const isDevelopment = process.env.NODE_ENV === 'development';
-  const areas = glob.sync(path.resolve(__dirname, 'Areas/*'));
   const output = path.resolve(__dirname, 'wwwroot/dist');
   const manifest = 'manifest.json';
   const publicPath = '/dist/';
@@ -27,39 +23,7 @@ module.exports = (() => {
   const jsRegex = /\.js$/;
   const cssRegex = /\.css$/;
   const scssRegex = /\.scss$/;
-  const fontRegex = /\.(otf|eot|ttf|woff|woff2)$/;
-  const svgRegex = /\.svg$/;
-  const imageRegex = /\.(jpg|jpeg|png|gif)$/;
-
-  const entries = {};
-
-  // Get entry points for Assets in root folder
-  Object.assign(entries, getEntryPoints(__dirname));
-
-  // Get entry points for Assets in area folders
-  areas.forEach((area) => {
-    Object.assign(entries, getEntryPoints(area, path.basename(area)));
-  });
-
-  // Add aliases for Assets in root folder
-  const aliases = {
-    '@': path.resolve(__dirname, 'Assets'),
-  };
-
-  // Add aliases for Assets in area folders
-  areas.forEach((area) => {
-    aliases[`@${path.basename(area)}`] = path.resolve(area, 'Assets');
-  });
-
-  const stats = {
-    modules: false,
-    children: false,
-    colors: true,
-  };
-
-  if (isDevelopment) {
-    stats.assets = false;
-  }
+  const assetRegex = /\.(jpg|jpeg|png|gif|svg|otf|eot|ttf|woff|woff2)$/;
 
   const filename = (ext) => {
     return isDevelopment
@@ -70,47 +34,93 @@ module.exports = (() => {
   const jsFilename = filename('js');
   const cssFilename = filename('css');
 
-  const cssBaseModules = [loaders.cssLoader(1), loaders.postCssLoader];
+  const styleLoader = (lazy) => {
+    const loader = {
+      loader: 'style-loader',
+    };
+    if (lazy) {
+      loader.options = {
+        injectType: 'lazyStyleTag',
+      };
+    }
+    return loader;
+  };
+
+  const cssLoader = (importLoaders) => ({
+    loader: 'css-loader',
+    options: {
+      sourceMap: isDevelopment,
+      modules: {
+        auto: true,
+        localIdentName: isDevelopment
+          ? '[name]__[local]--[hash:base64:5]'
+          : '[hash:base64]',
+      },
+      importLoaders,
+    },
+  });
+
+  const postCssLoader = {
+    loader: 'postcss-loader',
+    options: {
+      sourceMap: isDevelopment,
+    },
+  };
+
+  const resolveUrlLoader = {
+    loader: 'resolve-url-loader',
+    options: {
+      sourceMap: isDevelopment,
+      removeCR: true,
+    },
+  };
+
+  const sassLoader = {
+    loader: 'sass-loader',
+    options: {
+      // eslint-disable-next-line global-require
+      implementation: require('sass'),
+      sourceMap: true,
+    },
+  };
+
+  const cssBaseModules = [cssLoader(1), postCssLoader];
 
   const cssModulesInjected = (lazy) => [
-    loaders.styleLoader(lazy),
+    styleLoader(lazy),
     ...cssBaseModules,
   ];
 
   const scssBaseNodeModules = [
-    loaders.cssLoader(2),
-    loaders.postCssLoader,
-    loaders.sassLoader,
+    cssLoader(2),
+    postCssLoader,
+    sassLoader,
   ];
 
   const scssBaseModules = [
-    loaders.cssLoader(3),
-    loaders.postCssLoader,
-    loaders.resolveUrlLoader,
-    loaders.sassLoader,
+    cssLoader(3),
+    postCssLoader,
+    resolveUrlLoader,
+    sassLoader,
   ];
 
   const scssModulesInjected = (lazy) => [
-    loaders.styleLoader(lazy),
+    styleLoader(lazy),
     ...scssBaseModules,
   ];
 
   const config = {
-    stats,
-    context: __dirname,
-    entry: entries,
-    resolve: {
-      alias: {
-        ...aliases,
-      },
-    },
+    ...configBuilder({
+      context: __dirname,
+      assetsRoot: 'Assets',
+    }),
     output: {
       publicPath,
       filename: jsFilename,
       chunkFilename: jsFilename,
       sourceMapFilename: '[file].map',
     },
-    devtool: isDevelopment ? false : 'nosources-source-map',
+    devtool: isDevelopment ? 'inline-source-map' : 'nosources-source-map',
     mode: process.env.NODE_ENV,
     optimization: {
       minimizer: [
@@ -149,15 +159,6 @@ module.exports = (() => {
     module: {
       rules: [
         {
-          // Include source maps from node_modules
-          test: jsRegex,
-          include: nodeModulesRegex,
-          use: {
-            loader: 'source-map-loader',
-          },
-          enforce: 'pre',
-        },
-        {
           // Expose jQuery to global scope
           test: require.resolve('jquery'),
           use: {
@@ -171,19 +172,15 @@ module.exports = (() => {
           },
         },
         {
+          // Compile everything not in node_modules with babel-loader
           test: jsRegex,
-          oneOf: [
-            {
-              // Compile everything not in node_modules with babel-loader
-              exclude: nodeModulesRegex,
-              use: loaders.babelLoader,
+          exclude: nodeModulesRegex,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: isDevelopment,
             },
-            {
-              // Transpile all node_modules who are not browser friendly
-              include: babelEnvDeps.include(),
-              use: loaders.babelLoaderDeps,
-            },
-          ],
+          },
         },
         {
           test: cssRegex,
@@ -200,7 +197,7 @@ module.exports = (() => {
             },
             {
               // Extract all other styling into .css files
-              use: [loaders.miniCssExtractPluginLoader, ...cssBaseModules],
+              use: [MiniCssExtractPlugin.loader, ...cssBaseModules],
             },
           ],
         },
@@ -213,12 +210,12 @@ module.exports = (() => {
                 {
                   // Add support for injecting scss files from node_modules with js using <filename>.scss?inject
                   resourceQuery: injectRegex,
-                  use: [loaders.styleLoader(false), ...scssBaseNodeModules],
+                  use: [styleLoader(false), ...scssBaseNodeModules],
                 },
                 {
                   // Extract all other styling from node_modules into .css files
                   use: [
-                    loaders.miniCssExtractPluginLoader,
+                    MiniCssExtractPlugin.loader,
                     ...scssBaseNodeModules,
                   ],
                 },
@@ -236,38 +233,25 @@ module.exports = (() => {
             },
             {
               // Extract all other styling into .css files
-              use: [loaders.miniCssExtractPluginLoader, ...scssBaseModules],
+              use: [MiniCssExtractPlugin.loader, ...scssBaseModules],
             },
           ],
         },
         {
-          // Copies fonts to output
-          test: fontRegex,
-          use: loaders.urlLoader,
-        },
-        {
-          // Copies svg's from node_modules to output and optimize
-          test: svgRegex,
-          include: nodeModulesRegex,
-          use: [loaders.svgUrlLoader, loaders.imgLoader],
-        },
-        {
-          // Copies svg's to output
-          test: svgRegex,
-          exclude: nodeModulesRegex,
-          use: loaders.svgUrlLoader,
-        },
-        {
-          // Copies images from node_modules to output and optimize
-          test: imageRegex,
-          include: nodeModulesRegex,
-          use: [loaders.urlLoader, loaders.imgLoader],
-        },
-        {
           // Copies images to output
-          test: imageRegex,
-          exclude: nodeModulesRegex,
-          use: loaders.urlLoader,
+          test: assetRegex,
+          use: {
+            loader: 'url-loader',
+            options: {
+              limit: 2048,
+              name: (file) => {
+                if (file.includes('node_modules')) {
+                  return 'vendor/[name].[ext]';
+                }
+                return '[path][name].[ext]';
+              },
+            },
+          },
         },
       ],
     },
@@ -304,19 +288,11 @@ module.exports = (() => {
         'Access-Control-Allow-Origin': '*',
       },
       publicPath,
-      stats,
       contentBase: false,
       disableHostCheck: true,
       port: process.env.PORT,
     };
     config.plugins.push(
-      new webpack.SourceMapDevToolPlugin({
-        test: /\.s?css(\?.+)?$/,
-        columns: false,
-      }),
-      new webpack.EvalSourceMapDevToolPlugin({
-        test: /\.js(\?.+)?$/,
-      }),
       new WebpackNotifierPlugin(),
     );
   } else {

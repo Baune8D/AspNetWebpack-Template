@@ -4,10 +4,12 @@ This project is a template for using ASP.NET Core with Webpack and ES6 Modules.
 This architecture allows you to use the power of Webpack with any type of ASP.NET Core project, SPA or MPA.  
 It can easily be extended to support eg, TypeScript, Vue.js or whatever else you need.
 
+Additional related repos:
+* [AspNetWebpack.AssetHelpers](https://github.com/Baune8D/AspNetWebpack.AssetHelpers) - C# code for working with the generated assets.
+* [aspnet-webpack](https://github.com/Baune8D/aspnet-webpack) - NPM package that helps with Webpack configuration.
+
 This template implements the following front-end features:
 * Transpiling (Using Babel)
-* Nullish Coalescing Operator (Using Babel plugin)
-* Optional Chaining (Using Babel plugin)
 * Code splitting (Using Babel plugin and Webpack SplitChunks)
 * SCSS support (Defaults to extracting to separate CSS file)
 * CSS Modules (By using ```.module.scss``` suffix)
@@ -15,7 +17,6 @@ This template implements the following front-end features:
 * Injecting CSS/SCSS as style tag (By using ```.scss?inject``` query string)
 * PostCSS support
 * PostCSS Preset Env (Includes Autoprefixer)
-* Image optimizations (Only from node_modules)
 * Dev server (No physical files are written in development)
 * Hot Module Replacement
 * Cache busting
@@ -25,14 +26,14 @@ This template implements the following front-end features:
 * Editorconfig
 * Sourcemaps
 
-The config created the following bundles:
+The config creates the following bundles:
 * ```runtime.js``` containing Webpack runtime
 * ```Vendors.js``` containing all vendor code
 * ```Commons.js``` containing all shared code
 
-It also creates a view specific bundle e.g. ```Home_Index.js```
+It also creates a view specific bundle e.g. ```Home_Index.js``` for each view or Razor Page.
 
-Alternatively bundles can be manually created by adding files to ```Assets/bundles```
+Alternatively bundles can be manually created by adding files to ```Assets/bundles```.
 
 Install npm packages with ```npm install``` in project folder.  
 Start development server using ```npm start``` in project folder.  
