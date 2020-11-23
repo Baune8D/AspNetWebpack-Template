@@ -1,5 +1,7 @@
 @using AspNetWebpack.AssetHelpers
 
+@inject IAssetService AssetService
+
 @{
     var bundle = ViewData.GetBundleName() ?? Html.GetBundleName();
 }
@@ -10,16 +12,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AspNetWebpack</title>
-
     @await RenderSectionAsync("Head", required: false)
-    <partial name="_DefaultStyles" model="bundle" />
+
+    @await AssetService.GetLinkTagAsync("Vendors")
+    @await AssetService.GetLinkTagAsync("Commons")
+    @await AssetService.GetLinkTagAsync(bundle, "Layout");
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <div class="container text-center mt-5">
         @RenderBody()
     </div>
 
-    <partial name="_DefaultScripts" model="bundle"/>
+    @await AssetService.GetScriptTagAsync("runtime", ScriptLoad.Defer)
+    @await AssetService.GetScriptTagAsync("Vendors", ScriptLoad.Defer)
+    @await AssetService.GetScriptTagAsync("Commons", ScriptLoad.Defer)
+    @await AssetService.GetScriptTagAsync(bundle, "Layout", ScriptLoad.Defer);
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
