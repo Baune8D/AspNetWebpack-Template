@@ -9,7 +9,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const configBuilder = require('aspnet-webpack');
+const configBuilder = require('aspnet-webpack-utils');
 
 module.exports = (() => {
   const isDevelopment = process.env.NODE_ENV === 'development';
