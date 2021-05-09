@@ -86,16 +86,9 @@ module.exports = (() => {
 
   const cssBaseModules = [cssLoader(1), postCssLoader];
 
-  const cssModulesInjected = (lazy) => [
-    styleLoader(lazy),
-    ...cssBaseModules,
-  ];
+  const cssModulesInjected = (lazy) => [styleLoader(lazy), ...cssBaseModules];
 
-  const scssBaseNodeModules = [
-    cssLoader(2),
-    postCssLoader,
-    sassLoader,
-  ];
+  const scssBaseNodeModules = [cssLoader(2), postCssLoader, sassLoader];
 
   const scssBaseModules = [
     cssLoader(3),
@@ -104,10 +97,7 @@ module.exports = (() => {
     sassLoader,
   ];
 
-  const scssModulesInjected = (lazy) => [
-    styleLoader(lazy),
-    ...scssBaseModules,
-  ];
+  const scssModulesInjected = (lazy) => [styleLoader(lazy), ...scssBaseModules];
 
   const config = {
     ...configBuilder({
@@ -214,10 +204,7 @@ module.exports = (() => {
                 },
                 {
                   // Extract all other styling from node_modules into .css files
-                  use: [
-                    MiniCssExtractPlugin.loader,
-                    ...scssBaseNodeModules,
-                  ],
+                  use: [MiniCssExtractPlugin.loader, ...scssBaseNodeModules],
                 },
               ],
             },
@@ -292,9 +279,7 @@ module.exports = (() => {
       disableHostCheck: true,
       port: process.env.PORT,
     };
-    config.plugins.push(
-      new WebpackNotifierPlugin(),
-    );
+    config.plugins.push(new WebpackNotifierPlugin());
   } else {
     config.output.path = output;
     config.plugins.push(new CleanWebpackPlugin());
