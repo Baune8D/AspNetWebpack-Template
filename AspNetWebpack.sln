@@ -7,18 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetWebpack.Template", "s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D39E1952-E99E-4E3E-89CD-5E29CFAE13BC}"
 	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		README.md = README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".vscode", ".vscode", "{0FCFDA17-E139-4A38-886C-85B2FB55F323}"
-	ProjectSection(SolutionItems) = preProject
-		.vscode\extensions.json = .vscode\extensions.json
-		.vscode\launch.json = .vscode\launch.json
-		.vscode\settings.json = .vscode\settings.json
-		.vscode\tasks.json = .vscode\tasks.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A592AC2B-1235-44D5-8C32-99B632FA2E70}"
@@ -38,7 +28,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0FCFDA17-E139-4A38-886C-85B2FB55F323} = {D39E1952-E99E-4E3E-89CD-5E29CFAE13BC}
 		{1E0BBF5D-C7EE-436F-9E75-25BEA118A792} = {A592AC2B-1235-44D5-8C32-99B632FA2E70}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

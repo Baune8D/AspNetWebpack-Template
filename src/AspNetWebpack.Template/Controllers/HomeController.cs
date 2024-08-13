@@ -2,34 +2,30 @@
 using AspNetWebpack.Template.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetWebpack.Template.Controllers
+namespace AspNetWebpack.Template.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly ILogger<HomeController> _logger;
+
+    public HomeController(ILogger<HomeController> logger)
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        _logger = logger;
+    }
 
-        public IActionResult Inject()
-        {
-            return View();
-        }
+    public IActionResult Index()
+    {
+        return View();
+    }
 
-        public IActionResult Lazy()
-        {
-            return View();
-        }
+    public IActionResult Privacy()
+    {
+        return View();
+    }
 
-        public IActionResult Module()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

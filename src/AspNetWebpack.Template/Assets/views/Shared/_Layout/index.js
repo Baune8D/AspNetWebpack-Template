@@ -1,6 +1,5 @@
-// This file can be accessed with the alias: @/views/Shared/_Layout
-
 import 'jquery';
-import 'popper.js';
-import './bootstrap';
-import '@/styles/vendor/bootstrap.scss';
+import 'bootstrap/dist/css/bootstrap.css';
+import '@/js/site'
+import '@/css/site.css';
+import './index.css';
