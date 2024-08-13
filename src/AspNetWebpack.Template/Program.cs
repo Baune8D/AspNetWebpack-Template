@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace AspNetWebpack
+namespace AspNetWebpack.Template
 {
     public class Program
     {

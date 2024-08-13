@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AspNetWebpack.Areas.Area.Pages
+namespace AspNetWebpack.Template.Pages
 {
     public class RazorPageModel : PageModel
     {
