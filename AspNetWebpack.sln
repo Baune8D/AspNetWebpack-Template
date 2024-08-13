@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetWebpack.Template", "src\AspNetWebpack.Template\AspNetWebpack.Template.csproj", "{1E0BBF5D-C7EE-436F-9E75-25BEA118A792}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetWebpack.Template", "AspNetWebpack.Template\AspNetWebpack.Template.csproj", "{1E0BBF5D-C7EE-436F-9E75-25BEA118A792}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D39E1952-E99E-4E3E-89CD-5E29CFAE13BC}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A592AC2B-1235-44D5-8C32-99B632FA2E70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,7 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{1E0BBF5D-C7EE-436F-9E75-25BEA118A792} = {A592AC2B-1235-44D5-8C32-99B632FA2E70}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9D835CA-9061-4B3D-A660-48CFBFBDC7F1}
