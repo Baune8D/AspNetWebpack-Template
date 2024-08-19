@@ -1,0 +1,1 @@
+import '@/pages/Shared/_Layout';

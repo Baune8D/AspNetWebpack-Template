@@ -1,0 +1,30 @@
+{
+  "version": "1.0.0",
+  "name": "aspnetwebpack-razorpages",
+  "description": "This project is a template for using ASP.NET Core with Webpack.",
+  "private": true,
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack",
+    "start": "cross-env NODE_ENV=development PORT=9090 webpack-cli serve"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "jquery": "^3.7.1",
+    "jquery-validation": "^1.21.0",
+    "jquery-validation-unobtrusive": "^4.0.0"
+  },
+  "devDependencies": {
+    "aspnet-webpack-utils": "^0.1.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^7.1.2",
+    "css-minimizer-webpack-plugin": "^7.0.0",
+    "mini-css-extract-plugin": "^2.9.0",
+    "webpack": "^5.93.0",
+    "webpack-assets-manifest": "^5.2.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  }
+}
