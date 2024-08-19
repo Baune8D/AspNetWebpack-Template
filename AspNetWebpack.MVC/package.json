@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "name": "aspnetwebpack-template",
+  "name": "aspnetwebpack-mvc",
   "description": "This project is a template for using ASP.NET Core with Webpack.",
   "private": true,
   "scripts": {

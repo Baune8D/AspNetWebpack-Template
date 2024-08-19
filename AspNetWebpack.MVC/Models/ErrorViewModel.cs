@@ -1,4 +1,4 @@
-namespace AspNetWebpack.Template.Models;
+namespace AspNetWebpack.MVC.Models;
 
 public class ErrorViewModel
 {
