@@ -20,7 +20,7 @@
   "devDependencies": {
     "@types/node": "^24.13.3",
     "aspnet-buildtools": "^0.3.1",
-    "sass-embedded": "^1.103.1",
+    "sass-embedded": "^1.104.0",
     "typescript": "^5.9.3",
     "vite": "^8.2.2"
   }
